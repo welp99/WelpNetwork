@@ -1,0 +1,17 @@
+---
+- name: add ssh key
+  hosts: all
+  become: yes
+  tasks:
+  - name: install public keys
+    ansible.posix.authorized_key:
+      user: "{{ lookup('env','USER') }}"
+      state: present
+      key: "{{ lookup('file', '/home/semaphore/.ssh/id_rsa.pub') }}" #créer un dossier .ssh dans /home/semaphore/ et y ajouter la clé publique 
+  - name: change sudoers file
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%sudo'
+      line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+      validate: /usr/sbin/visudo -cf %s

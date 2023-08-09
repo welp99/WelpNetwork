@@ -1,0 +1,17 @@
+---
+- name: Vérifier la version du serveur Linux
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: Afficher la version du système
+      command: "cat /etc/os-release"
+      register: system_info
+
+    - name: Extraire la version du système
+      set_fact:
+        linux_version: "{{ system_info.stdout_lines | join('\n') }}"
+
+    - name: Afficher la version
+      debug:
+        var: linux_version
