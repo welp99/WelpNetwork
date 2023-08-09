@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mariadb_glpi:
+    image: mariadb:latest
+    volumes:
+      - /mnt/storage/glpi_mariadb_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=glpi
+      - MYSQL_USER=glpi
+      - MYSQL_PASSWORD=password
+    deploy:
+      replicas: 1
+      
+
+  glpi:
+    image: diouxx/glpi:latest
+    ports:
+      - 8200:80
+    volumes:
+      - /mnt/storage/glpi_data:/var/www/html/glpi
+    environment:
+      - GLPI_DB_HOST=mariadb_glpi
+      - GLPI_DB_NAME=glpi
+      - GLPI_DB_USER=glpi
+      - GLPI_DB_PASSWORD=password
+    deploy:
+      replicas: 1
+      
+
+

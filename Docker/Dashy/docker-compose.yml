@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  my-dashboard:
+    image: lissy93/dashy:latest
+    deploy:
+      replicas: 1
+    ports:
+      - 8777:80
+    volumes:
+      - dashy-data:/app/public 
+
+volumes:
+  dashy-data:
+

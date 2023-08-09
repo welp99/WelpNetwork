@@ -1,0 +1,16 @@
+pageInfo:
+  title: Home Lab
+  description: Welcome to my network
+  navLinks:
+    - title: GitHub
+      path: https://github.com/Lissy93/dashy
+      target: newtab
+    - title: Documentation
+      path: https://dashy.to/docs
+      target: newtab
+appConfig:
+  theme: material-dark
+  layout: horizontal
+  iconSize: medium
+  language: en
+sections:

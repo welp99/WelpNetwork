@@ -1,0 +1,39 @@
+version: '3'
+services:
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx
+    ports:
+      - '22080:80' 
+      - '81:81'
+      - '22043:443' 
+    restart: unless-stopped
+    environment:
+      DB_MYSQL_HOST: "nginx-db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "nginx" # à modifier
+      DB_MYSQL_PASSWORD: "nginxmdp" # à modifier
+      DB_MYSQL_NAME: "nginx"
+    volumes:
+      - ng-data:/data
+      - letsencrypt:/etc/letsencrypt
+    depends_on:
+      - nginx-db
+
+  nginx-db:
+    image: 'jc21/mariadb-aria:latest'
+    container_name: nginx-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm' # à modifier
+      MYSQL_DATABASE: 'nginx'
+      MYSQL_USER: 'nginx' # à modifier
+      MYSQL_PASSWORD: 'nginxmdp' # à modifier
+    volumes:
+      - ng-mysql:/var/lib/mysql 
+
+volumes:
+  ng-data:
+  letsencrypt:
+  ng-mysql:
+

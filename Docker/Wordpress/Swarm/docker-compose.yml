@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=your_root_password
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress_password
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 80:80
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_NAME=wordpress
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress_password
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+
+volumes:
+  mariadb_data:
+  wordpress_data:
