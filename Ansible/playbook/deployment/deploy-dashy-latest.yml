@@ -2,10 +2,12 @@
 - name: Deploy Dashy Latest
   hosts: all
   become: yes
+  become_user: "{{ lookup('env','USER') }}"
   tasks:
     - name: Pull Docker image
       docker_image:
-        name: lissy93/dashy:latest
+        name: dashy:latest
+        image: "docker.io/lissy93/dashy:latest"
       register: image_result
 
     - name: Run Docker container
