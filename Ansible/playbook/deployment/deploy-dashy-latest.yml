@@ -1,0 +1,33 @@
+---
+- name: Deploy Dashy Latest
+  hosts: all
+  become: yes
+  tasks:
+    - name: Pull Docker image
+      docker_image:
+        name: dashy:latest
+      register: image_result
+
+    - name: Run Docker container
+      docker_container:
+        name: dashy
+        image: dashy:latest
+        state: started
+        ports:
+          - "8777:80"
+        volumes:
+          - "/mnt/storage/dashy:/app/public"
+          - "/mnt/storage/item-icons:/app/public/item-icons"
+      register: container_result
+
+    - name: Ensure Docker container is running
+      debug:
+        msg: "Container is running."
+      when: container_result.changed
+
+    - name: Stop and remove old Docker container (if applicable)
+      docker_container:
+        name: dashy
+        state: stopped
+        remove: yes
+      ignore_errors: yes
