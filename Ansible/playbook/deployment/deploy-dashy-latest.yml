@@ -6,7 +6,7 @@
   tasks:
     - name: Pull Docker image
       community.docker.docker_container:
-        name: dashy:latest
+        name: dashy
         image: "docker.io/lissy93/dashy:latest"
       register: image_result
 
