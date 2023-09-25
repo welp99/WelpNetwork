@@ -8,8 +8,6 @@ services:
     ports:
       - 8777:80
     volumes:
-      - dashy-data:/app/public 
-
-volumes:
-  dashy-data:
+      - /mnt/storage/dashy:/app/public
+      - /mnt/storage/item-icons:/app/public/item-icons
 
