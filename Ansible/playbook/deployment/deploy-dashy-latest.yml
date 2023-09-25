@@ -6,12 +6,14 @@
   tasks:
     - name: Pull Docker image
       docker_image:
+      community.docker.docker_container:
         name: dashy:latest
         image: "docker.io/lissy93/dashy:latest"
       register: image_result
 
     - name: Run Docker container
       docker_container:
+      community.docker.docker_container:
         name: dashy
         image: lissy93/dashy:latest
         state: started
