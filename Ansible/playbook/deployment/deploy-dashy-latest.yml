@@ -9,7 +9,12 @@
         name: dashy
         image: "docker.io/lissy93/dashy:latest"
       register: image_result
-
+    - name: Stop and remove old Docker container (if applicable)
+          docker_container:
+            name: dashy
+            state: stopped
+            remove: yes
+          ignore_errors: yes
     - name: Run Docker container
       docker_container:
         name: dashy
@@ -27,9 +32,4 @@
         msg: "Container is running."
       when: container_result.changed
 
-    - name: Stop and remove old Docker container (if applicable)
-      docker_container:
-        name: dashy
-        state: stopped
-        remove: yes
-      ignore_errors: yes
+    
