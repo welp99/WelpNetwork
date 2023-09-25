@@ -5,13 +5,13 @@
   tasks:
     - name: Pull Docker image
       docker_image:
-        name: dashy:latest
+        name: lissy93/dashy:latest
       register: image_result
 
     - name: Run Docker container
       docker_container:
         name: dashy
-        image: dashy:latest
+        image: lissy93/dashy:latest
         state: started
         ports:
           - "8777:80"
