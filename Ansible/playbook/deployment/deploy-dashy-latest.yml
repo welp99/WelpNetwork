@@ -12,8 +12,7 @@
     - name: Stop and remove old Docker container (if applicable)
       docker_container:
         name: dashy
-        state: stopped
-        remove: yes
+        state: absent
       ignore_errors: yes
     - name: Run Docker container
       docker_container:
