@@ -1,0 +1,32 @@
+---
+- name: Deploy pingvin with ansible
+  hosts: all
+  become: yes
+  become_user: "{{ lookup('env','USER') }}"
+  tasks:
+    - name: Pull Docker image
+      community.docker.docker_container:
+        name: pingvin
+        image: "docker.io/stonith404/pingvin-share:latest"
+      register: image_result
+    - name: Stop and remove old Docker container (if applicable)
+      docker_container:
+        name: pingvin
+        state: absent
+      ignore_errors: yes
+    - name: Run Docker container
+      docker_container:
+        name: pingvin
+        image: stonith404/pingvin-share:latest
+        state: started
+        ports:
+          - "3100:3000"
+        volumes:
+          - /mnt/storage/pg-data:/opt/app/backend/data
+          - /mnt/storage/pg-images:/opt/app/frontend/public/img
+      register: container_result
+
+    - name: Ensure Docker container is running
+      debug:
+        msg: "Container is running."
+      when: container_result.changed
