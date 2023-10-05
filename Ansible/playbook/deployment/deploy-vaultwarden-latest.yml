@@ -23,7 +23,7 @@
           - "8130:80"
           - "8543:443"
         volumes:
-          - "/mnt/storage/vw-data:/data"
+          - "/vw-data:/data"
       register: container_result
 
     - name: Ensure Docker container is running

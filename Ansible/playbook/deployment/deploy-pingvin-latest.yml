@@ -22,8 +22,8 @@
         ports:
           - "3100:3000"
         volumes:
-          - /mnt/storage/pg-data:/opt/app/backend/data
-          - /mnt/storage/pg-images:/opt/app/frontend/public/img
+          - /pg-data:/opt/app/backend/data
+          - /pg-images:/opt/app/frontend/public/img
       register: container_result
 
     - name: Ensure Docker container is running

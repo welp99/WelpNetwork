@@ -22,8 +22,8 @@
         ports:
           - "8777:80"
         volumes:
-          - "/mnt/storage/dashy:/app/public"
-          - "/mnt/storage/item-icons:/app/public/item-icons"
+          - "/dashy:/app/public"
+          - "/item-icons:/app/public/item-icons"
       register: container_result
 
     - name: Ensure Docker container is running
