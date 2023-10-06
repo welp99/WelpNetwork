@@ -1,0 +1,35 @@
+---
+- name: Collect Uptime Information, Generate CSV, and Transfer to Remote Server
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Get Uptime
+      shell: "uptime -p"
+      register: uptime_output
+
+    - name: Save Uptime to Fact
+      set_fact:
+        server_uptime: "{{ server_uptime | default({}) | combine({inventory_hostname: uptime_output.stdout}) }}"
+      delegate_to: localhost
+
+    - name: Generate CSV Content
+      copy:
+        content: |
+          Server,Uptime
+          {% for host, uptime in server_uptime.items() %}
+          {{ host }},{{ uptime }}
+          {% endfor %}
+        dest: /tmp/uptime.csv
+      delegate_to: localhost
+
+    - name: Copy CSV to Remote Server
+      copy:
+        src: /tmp/uptime.csv
+        dest: /path/to/uptime.csv
+      delegate_to: <ip_adresse_remote_srv>
+
+    - name: Remove Local CSV File
+      file:
+        path: /tmp/uptime.csv
+        state: absent
+      delegate_to: localhost
