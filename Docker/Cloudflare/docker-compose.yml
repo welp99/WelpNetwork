@@ -1,7 +1,18 @@
-version: '3'
+version: '3.8'
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
 
 services:
   cloudflared:
     image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token #Add token cloudflare
-    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token <add_token>
+    deploy:
+      mode: replicated
+      replicas: 1
+    networks:
+      - frontend
+      - backend
