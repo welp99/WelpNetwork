@@ -1,35 +1,46 @@
 ---
-- name: Collect Uptime Information, Generate CSV, and Transfer to Remote Server
+- name: Collect Uptime Information and Append to CSV
   hosts: all
   gather_facts: yes
   tasks:
-    - name: Get Uptime
-      shell: "uptime -p"
+    - name: Check if Local CSV File Exists
+      stat:
+        path: /tmp/uptime.csv
+      register: csv_file_exists
+      delegate_to: localhost
+
+    - name: Delete Local CSV File if Exists
+      file:
+        path: /tmp/uptime.csv
+        state: absent
+      when: csv_file_exists.stat.exists
+
+    - name: Get Uptime for All Servers
+      command: "uptime -p"
       register: uptime_output
 
-    - name: Save Uptime to Fact
-      set_fact:
-        server_uptime: "{{ server_uptime | default({}) | combine({inventory_hostname: uptime_output.stdout}) }}"
+    - name: Append Uptime to CSV
+      lineinfile:
+        line: "{{ inventory_hostname }},{{ uptime_output.stdout }}"
+        path: /tmp/uptime.csv
+        create: yes
       delegate_to: localhost
 
-    - name: Generate CSV Content
-      copy:
-        content: |
-          Server,Uptime
-          {% for host, uptime in server_uptime.items() %}
-          {{ host }},{{ uptime }}
-          {% endfor %}
-        dest: /tmp/uptime.csv
-      delegate_to: localhost
-
+- name: Transfer CSV to Remote Server
+  hosts: localhost
+  gather_facts: yes
+  tasks:
     - name: Copy CSV to Remote Server
       copy:
         src: /tmp/uptime.csv
         dest: /path/to/uptime.csv
-      delegate_to: <ip_adresse_remote_srv>
+      delegate_to: <remote_server>
 
+- name: Delete Local CSV File
+  hosts: localhost
+  gather_facts: yes
+  tasks:
     - name: Remove Local CSV File
       file:
         path: /tmp/uptime.csv
         state: absent
-      delegate_to: localhost
