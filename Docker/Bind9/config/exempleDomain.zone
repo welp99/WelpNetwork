@@ -1,6 +1,6 @@
-$TTL 2d
+$TTL 2d  ; Cache Time To Live (2 days)
 
-$ORIGIN exempleDomain.
+$ORIGIN exempleDomain.  ; Setting the domain's origin
 
 @               IN              SOA         ns.exempleDomain.    info.exempleDomain.   (
                                             20231016    ;   serial
@@ -10,17 +10,17 @@ $ORIGIN exempleDomain.
                                             2h          ;   minimum ttl
 )
 
-                IN              NS          ns.exempleDomain.
+                IN              NS          ns.exempleDomain.  ; Name Server Record
 
-ns              IN              A           <ipAddress_dnsServer>
+ns              IN              A           <ipAddress_dnsServer>  ; A Record for the DNS server
 
 
 ; -- add dns records below 
 
 
-<nameServer>         IN              A           <ipAddress>
+<nameServer>         IN              A           <ipAddress>  ; A Record for a server named <nameServer>
 <nameServer>         IN              A           <ipAddress>
 <nameServer>           IN              A           <ipAddress>
-*.<nameServer>         IN              A           <ipAddress>
+*.<nameServer>         IN              A           <ipAddress>  ; Generic A Record for all subdomains of <nameServer>
 
 ;
