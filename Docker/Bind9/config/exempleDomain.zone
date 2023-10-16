@@ -1,0 +1,26 @@
+$TTL 2d
+
+$ORIGIN exempleDomain.
+
+@               IN              SOA         ns.exempleDomain.    info.exempleDomain.   (
+                                            20231016    ;   serial
+                                            12h         ;   refresh
+                                            15m         ;   retry
+                                            3w          ;   expire
+                                            2h          ;   minimum ttl
+)
+
+                IN              NS          ns.exempleDomain.
+
+ns              IN              A           <ipAddress_dnsServer>
+
+
+; -- add dns records below 
+
+
+<nameServer>         IN              A           <ipAddress>
+<nameServer>         IN              A           <ipAddress>
+<nameServer>           IN              A           <ipAddress>
+*.<nameServer>         IN              A           <ipAddress>
+
+;
