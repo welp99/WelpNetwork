@@ -1,26 +1,18 @@
 version: '3'
 services:
-  jenkins-blueocean:
-    image: jenkinsci/blueocean
-    container_name: jenkins-blueocean
-    restart: on-failure
-    networks:
-      - jenkins
-    environment:
-      DOCKER_HOST: tcp://docker:2376
-      DOCKER_CERT_PATH: /certs/client
-      DOCKER_TLS_VERIFY: "1"
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
     ports:
       - "8080:8080"
-      - "50000:50000"
     volumes:
-      - jenkins-data:/var/jenkins_home
-      - jenkins-docker-certs:/certs/client:ro
+      - /mnt/storage/jenkins_home:/var/jenkins_home
+    environment:
+      - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}
+    command: bash -c 'echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"admin\", \"${JENKINS_ADMIN_PASSWORD}\")" > /usr/share/jenkins/ref/init.groovy.d/initAdmin.groovy && /usr/local/bin/jenkins.sh'
+    restart: always
 
-volumes:
-  jenkins-data:
-  jenkins-docker-certs:
 
-networks:
-  jenkins:
-
+  ssh-agent:
+    image: jenkins/ssh-agent
+    restart: always
