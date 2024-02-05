@@ -1,0 +1,31 @@
+version: '3'
+
+networks:
+  keycloak_default:
+    driver: bridge
+
+services:
+  openldap:
+    image: bitnami/openldap:2
+    container_name: openldap
+    ports:
+      - '1389:1389'
+      - '1636:1636'
+    env_file: .env
+    environment:
+      LDAP_ADMIN_USERNAME: admin
+      LDAP_ADMIN_PASSWORD: password
+      LDAP_USERS: user01,user02
+      LDAP_PASSWORDS: password1,passw
+      LDAP_ROOT: dc=example,dc=org
+      LDAP_ADMIN_DN: cn=admin,dc=example,dc=org
+      LDAP_BASE_DN: dc=example,dc=org
+      LDAP_DOMAIN: example.org
+      LDAP_ORGANISATION: "Example Inc."
+    networks:
+      - keycloak_default
+    volumes:
+      - openldap_data:/bitnami/openldap
+
+volumes:
+  openldap_data:
