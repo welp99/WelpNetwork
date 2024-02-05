@@ -1,0 +1,63 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- Lab:
+    - Proxmox:
+        icon: proxmox.svg
+        href: 
+        description: PVE 1
+        widget:
+            type: proxmox
+            url: 
+            username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
+            password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
+            node: proxmox
+    - Uptimekuma:
+        icon: https://static-00.iconduck.com/assets.00/uptime-kuma-icon-512x469-ce3ut52z.png
+        href: 
+        description: Supervision
+        widget:
+            type: uptimekuma
+            url: 
+            slug: welplab
+            key: "{{ HOMEPAGE_VAR_UPDATEKUMA_API_KEY }}"
+    - Truenas:
+        icon: truenas.svg
+        href: 
+        description: Storage
+        #widget:
+            #type: truenas
+            #url: https://192.168.1.22
+            #username: "{{HOMEPAGE_VAR_TRUENAS_USER}}"
+            #key: "{{ HOMEPAGE_VAR_TRUENAS_API_KEY }}"
+
+    - WELPNETWORK:
+        icon: 
+        href: 
+        description: CV
+
+- Automation:
+    
+    - Ansible:
+        icon: ansible.svg
+        href: 
+        description: Docker Ansible
+    - Jenkins:
+        icon: jenkins.svg
+        href: 
+        description: Docker Jenkins
+- Administration:
+    - DockerHub:
+        icon: docker.svg
+        href: 
+        description: DockerHub welp93
+    - Cloudflare:
+        icon: cloudflare.svg
+        href: 
+        description: Cloudflare Tunnel
+    - Twingate:
+        icon: twingate.svg
+        href: 
+        description: Zerotrust Network
+
