@@ -1,0 +1,44 @@
+---
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+services:
+  traefik_NESS:
+    container_name: traefik_NESS
+    image: traefik:2.10.5
+    ports:
+      - 80:80
+      - 443:443
+    #  - 8080:8080
+    volumes:
+      - ./config:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config/conf/:/etc/traefik/conf/:ro
+      - ./config/certs/:/etc/traefik/certs/
+      - ./config/config.yml:/config.yml:ro
+    environment:
+      - CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
+      - CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}
+    networks:
+      - frontend
+      - backend
+    restart: unless-stopped
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik.entrypoints=web"
+        - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.lab.welpnetwork.com`)"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_PASSWORD}"
+        - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=websecure"
+        - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+        - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+        - "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.lab.welpnetwork.com`)"
+        - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+        - "traefik.http.routers.traefik-secure.tls=true"
+        - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+        - "traefik.http.routers.traefik-secure.tls.domains[1].main=welpnetwork.com" #if you use the .home.welpnetwork.com entry you have to change the [0] into [1]
+        - "traefik.http.routers.traefik-secure.tls.domains[1].sans=*.welpnetwork.com" # same here, change 0 to 1
+        - "traefik.http.routers.traefik-secure.service=api@internal"
+      
