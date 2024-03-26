@@ -130,6 +130,8 @@ ss -lntp
 
 ![check-kibana](../SIEM/src/check-kibana.png)
 
+## Nginx
+
 ### Installation of nginx
 
 ```bash
@@ -186,6 +188,7 @@ Create a .ini file
 certbot certonly --dns-cloudflare --dns-cloudflare-credentials /chemin/vers/votre/fichier/credentials.ini -d votre_domaine.com
 ```
     
+## Fleet Server
 
 ### Log in to kibana
 
