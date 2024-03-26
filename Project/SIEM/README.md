@@ -128,7 +128,7 @@ sudo systemctl start kibana
 ss -lntp
 ```
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/78d839d0-88e3-4932-baa8-63196321ee35/Untitled.png)
+![check-kibana](../SIEM/src/check-kibana.png)
 
 ### Installation of nginx
 
@@ -143,9 +143,9 @@ sudo apt install nginx
 sudo nano /etc/nginx/sites-enabled/default
 ```
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/fbbcf8c5-95f2-49bd-85bb-926b8a91a01a/Untitled.png)
+![proxypass-1](../SIEM/src/proxypass-1.png)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/e8c96385-da5e-408f-8516-7b39c1ed44d9/Untitled.png)
+![proxypass-2](../SIEM/src/proxypass-2.png)
 
 ```bash
 sudo systemctl enable nginx
@@ -227,27 +227,27 @@ sudo mkdir -p /usr/local/etc/ssl/certs/elastic/
 sudo curl 10.10.22.10:8000/http_ca.crt -o /usr/local/etc/ssl/certs/elastic/http_ca.crt
 ```
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/518b043f-14bf-47a7-8b4a-1bfb87b2c33f/Untitled.png)
+![transfert-cert](../SIEM/src/transfert-cert.png)
 
 - Go to kibana
 - Clic on Add Integration
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/fdc641d0-c471-4197-a0c4-9477e26ab42d/Untitled.png)
+![add-integration](../SIEM/src/add-integration.png)
 
 - Search for “Fleet server”
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/40a253b6-97d7-4869-a401-9fd58152c8d2/Untitled.png)
+![fleet-server](../SIEM/src/fleet-server.png)
 
 - Add fleet server
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/f619d426-4076-4b23-9cf1-daa6a9a7b95c/Untitled.png)
+![add-fleetserver](../SIEM/src/add-fleetserver.png)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/4cece554-6689-498c-9596-beeb1695bd91/Untitled.png)
+![fleet-server-integration](../SIEM/src/fleet-server-integration.png)
 
 - Leave as default & click on “Save and continue”
 - Click on “Add Elastic Agent to yours hosts”
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/c5ae5b1c-6b62-4d80-9531-e4ca0d6bcd16/Untitled.png)
+![create-agent](../SIEM/src/create-agent.png)
 
 - Add Fleet Server
 
@@ -259,11 +259,11 @@ We will used a different server, only the fleet server will be connected to elas
 - Add your fleet server host
 - Add name and URL for you fleet server
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/3bc73922-dfd7-455e-abe2-8e8fcf30a025/Untitled.png)
+![add-fleet-host](../SIEM/src/add-fleet-host.png)
 
 - Generate a service token
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/f20dacf0-3e3e-4a3b-833e-a515730067d9/Untitled.png)
+![generate-serviceToken](../SIEM/src/genererate-serviceToken.png)
 
 ```bash
 AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE3MTA5MzU1NzMxOTA6RlBiLXc4UTVRRUtjUjlnZnd0VGZXQQ
@@ -282,13 +282,13 @@ sudo ./elastic-agent install \
   --insecure
 ```
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/1f00279f-bab8-4d10-adb5-ba5069b93089/Untitled.png)
+![fleet-setting](../SIEM/src/fleet-setting.png)
 
 - go to “Fleet Settings”
 
 You should have your fleet server with the right URL display here
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/eda6ea63-0656-4919-9add-e6c9b35a1131/Untitled.png)
+![fleet-url](../SIEM/src/fleet-url.png)
 
 ### Creation of encrypted-key for Kibana
 
