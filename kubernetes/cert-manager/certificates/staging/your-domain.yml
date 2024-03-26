@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: your-domain
+  namespace: default
+spec:
+  secretName: your-domain-staging-tls
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: "*.your-domain.com"
+  dnsNames:
+  - "your-domain.com"
+  - "*.your-domain.com"
