@@ -8,6 +8,6 @@ helm repo update
 ## Install portainer
 
 ```bash
-helm upgrade --install --create-namespace -n portainer portainer portainer/portainer \
+helm upgrade --install --create-namespace -n portainer portainer portainer/portainer 
 
 ```
