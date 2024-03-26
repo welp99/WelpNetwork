@@ -11,3 +11,9 @@ helm repo update
 helm upgrade --install --create-namespace -n portainer portainer portainer/portainer 
 
 ```
+
+## Deploy Manifest
+
+```bash
+kubectl apply -f ./portainer/
+```
