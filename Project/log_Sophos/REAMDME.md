@@ -1,3 +1,7 @@
+## Intro 
+
+This tutorial will then walk you through the steps of installing and configuring rSyslog on an Ubuntu server to collect logs. With the addition of a Fleet agent on the syslog server with Sophos integration, you will be able to seamlessly forward Sophos logs for analysis. 
+
 ## Pre-requis
 
 - You will need a Elastic/Kibana Server 

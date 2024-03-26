@@ -1,3 +1,7 @@
+## Intro
+
+This tutorial aims to guide you through the process of setting up a robust log management solution using Elastic Stack. Elastic Stack, comprising Elastic Search, Kibana, and other components, offers powerful tools for searching, analyzing, and visualizing log data in real-time. 
+
 ## Pre-requis
 
 - Elastic : server Ubuntu 22.04 > RAM : 4G // CPU : 2 // Disk : 32Go
