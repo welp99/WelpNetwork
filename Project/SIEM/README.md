@@ -113,7 +113,7 @@ sudo /usr/share/kibana/bin/kibana-setup
 
 Paste the enrollement token 
 
-![kibana-token](../src/kibana-token.png)
+![kibana-token](../SIEM/src/kibana-token.png)
 
 ### Start Kibana
 
