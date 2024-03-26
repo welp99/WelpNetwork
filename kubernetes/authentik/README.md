@@ -13,5 +13,5 @@ helm upgrade --install authentik authentik/authentik -f values.yml
 ## Deploy additional manifest
 ```bash
 kubectl apply -f ingress.yml
-kubectl apply -f default-headres.yml
+kubectl apply -f default-headers.yml
 ```
