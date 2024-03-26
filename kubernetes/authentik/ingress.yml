@@ -1,0 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik
+  namespace: default
+  annotations: 
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`www.auth.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: authentik
+          port: 80
+    - match: Host(`auth.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: authentik
+          port: 80
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: tls  # change to your cert name

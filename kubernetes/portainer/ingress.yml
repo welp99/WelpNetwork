@@ -1,0 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: portainer
+  namespace: portainer
+  annotations: 
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`www.portainer-ce.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: portainer
+          port: 9443
+    - match: Host(`portainer-ce.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: portainer
+          port: 9443
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: tls  # change to your cert name

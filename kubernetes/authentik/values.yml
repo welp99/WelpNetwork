@@ -1,0 +1,42 @@
+authentik:
+    secret_key: "SCJcMGId9mo0Ci9Np/VN1ON9VN1+9JKiGGsccoDLVSWjDXFT"
+    # This sends anonymous usage-data, stack traces on errors and
+    # performance data to sentry.io, and is fully opt-in
+    error_reporting:
+        enabled: true
+    postgresql:
+        password: "Wc3Y78J7Wr5ppUoB26cqCU6ohAL9qSnb"
+
+server:
+    ingress:
+        # Specify kubernetes ingress controller class name
+        ingressClassName: traefik
+        enabled: true
+        hosts:
+            - auth.lab.welpnetwork.com
+
+postgresql:
+    enabled: true
+    auth:
+        password: "Wc3Y78J7Wr5ppUoB26cqCU6ohAL9qSnb"
+redis:
+    enabled: true
+
+# add this block under the `authentik:` block in your values.yaml file
+# authentik:
+email:
+    # -- SMTP Server emails are sent from, fully optional
+    host: "smtp.gmail.com"
+    port: 587
+    # -- SMTP credentials, when left empty, no authentication will be done
+    username: "noreply.welpnetwork@gmail.com"
+    # -- SMTP credentials, when left empty, no authentication will be done
+    password: "iqsp drho kqux arlr"
+    # -- Enable either use_tls or use_ssl, they can't be enabled at the same time.
+    use_tls: false
+    # -- Enable either use_tls or use_ssl, they can't be enabled at the same time.
+    use_ssl: false
+    # -- Connection timeout
+    timeout: 30
+    # -- Email from address, can either be in the format "foo@bar.baz" or "authentik <foo@bar.baz>"
+    from: "noreply.welpnetwork@gmail.com"
