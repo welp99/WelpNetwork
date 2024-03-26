@@ -1,0 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gitea
+  namespace: gitea
+  annotations: 
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`www.git.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: gitea
+          port: 80
+    - match: Host(`git.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: gitea
+          port: 80
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: tls  # change to your cert name
