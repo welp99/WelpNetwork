@@ -113,7 +113,7 @@ sudo /usr/share/kibana/bin/kibana-setup
 
 Paste the enrollement token 
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/bda25b28-90cb-4bb1-b230-9312482e55f1/ae7c74ee-6f19-43c2-85be-d1773bb1b649/Untitled.png)
+![kibana-token](../src/kibana-token.png)
 
 ### Start Kibana
 
