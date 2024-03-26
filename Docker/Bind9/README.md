@@ -17,7 +17,7 @@ services:
   bind9:
     image: ubuntu/bind:latest
     restart: always
-		environment: 
+    environment: 
       - BIND9_USER=root
       - TZ=Europe/Paris
     volumes:
