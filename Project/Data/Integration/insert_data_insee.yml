@@ -1,0 +1,38 @@
+---
+- name: Exécuter un script sur un serveur distant
+  hosts: node2
+  become: yes
+  vars_files:
+  - "./vault.yml"
+
+  tasks:
+
+    - name: Copier le csv
+      copy:
+        src: ./hexa_small.csv  
+        dest: /scripts/hexa_small.csv
+      become: yes
+
+    - name: Copier le script
+      copy:
+        src: ./insert_data_insee.py  
+        dest: /scripts/insert_data_insee.py 
+      become: yes
+
+    - name: Return all secrets from a path
+      set_fact:
+        vault_secrets: "{{ lookup('community.general.hashi_vault', 'secret=secret/data/database token=hvs.fA7eKL16ZvZINpgVTnIx12A8 url=http://192.168.1.23:8200')}}"
+
+    - name: Exécuter le script Python avec les variables de Vault
+      command: >
+        python3 /scripts/insert_data_insee.py
+        --host "{{ vault_secrets.data.mysql_host | default(vault_secrets.mysql_host) }}"
+        --user "{{ vault_secrets.data.mysql_user | default(vault_secrets.mysql_user) }}"
+        --port "{{ vault_secrets.data.mysql_port | default(vault_secrets.mysql_port) }}"
+        --password "{{ vault_secrets.data.mysql_password | default(vault_secrets.mysql_password) }}"
+        --database "{{ vault_secrets.data.mysql_database | default(vault_secrets.mysql_database) }}"
+    - name: Supprimer le script
+      file: 
+        path: /scripts/insert_data_insee.py
+        state: absent
+      become: yes
