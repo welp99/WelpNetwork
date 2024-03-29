@@ -1,0 +1,287 @@
+/* Styles pour les paragraphes */
+p {
+    color: black;
+    font-size: 1.3em;
+    font-weight: 300;
+}
+
+/* Styles pour les titres de niveau 1 */
+h1 {
+    color: black;
+    font-size: 4.5em;
+    font-weight: bold;
+}
+
+/* Styles pour les titres de niveau 2 */
+h2 {
+    color: black;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Styles pour les titres de niveau 3 */
+h3 {
+    color: black;
+    font-size: 2.5em;
+    font-weight:400;
+}
+/* Styles pour les titres de niveau 3 */
+h4 {
+    color: orange;
+    font-size: 1.2em;
+}
+
+.liltext {
+   font-size: 1em;
+   padding-top: 1em;
+}
+
+.center-text {
+    text-align: center; /* Ajouter cette classe pour centrer le texte */
+}
+/* CSS personnalisé pour le bouton LinkedIn */
+.btn-linkedin {
+    background-color: orange;
+    border-color: orange;
+    font-size: 1.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-linkedin:hover {
+    background-color: #fcba3f;
+    border-color: #fcba3f;
+}
+
+/* CSS personnalisé pour le bouton Github */
+.btn-github {
+    background-color:black;
+    border-color:black;
+    color: white;
+    font-size: 1.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-github:hover {
+    background-color: rgb(30, 30, 30);
+    border-color: rgb(30, 30, 30);
+    color: white;
+}
+
+/* CSS personnalisé pour le bouton "Télécharger" */
+.btn-telecharger {
+    background-color: black;
+    border-color: black;
+    color: white;
+    font-size: 1.5em;
+    margin-top: 1.7em;
+    margin-bottom: 0.9em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-telecharger:hover {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+}
+
+.fa-birthday-cake {
+    color: black;
+    margin-right: 0.5em;
+}
+
+.fa-map-marker-alt {
+    color: black;
+    margin-right: 0.5em;
+}
+
+.fa-envelope {
+    color: black;
+    margin-right: 0.5em;
+}
+
+.fa-phone {
+    color: black;
+    margin-right: 0.5em;
+}
+
+.fa-discord {
+    color: black;
+    margin-right: 0.5em;
+}
+
+.fa-list {
+    color: black;
+    margin-right: 0.5em;
+    margin-inline: 0.9em;
+    margin-bottom: 0.5em;
+}
+
+.fa-cogs {
+    color: black;
+    margin-right: 0.5em;
+    margin-inline: 0.9em;
+    margin-bottom: 0.5em;
+}
+
+.fa-network-wired {
+    color: black;
+    margin-right: 0.5em;
+    margin-inline: 0.9em;
+    margin-bottom: 0.5em;
+}
+
+.fa-graduation-cap {
+    color: black;
+}
+
+.fa-redhat {
+    color: black;
+}
+
+.fa-linux {
+    color: black;
+}
+
+.fa-windows {
+    color: black;
+}
+/* CSS pour la barre verticale */
+.nom-avec-barre {
+    position: relative;
+}
+
+.nom-avec-barre::before {
+    content: "";
+    position: absolute;
+    left: 0; /* Ajustez la position de la barre en fonction de vos préférences */
+    top: 0;
+    bottom: 0;
+    width: 0.3em; /* Largeur de la barre */
+    background-color: orange; /* Couleur de la barre */
+}
+
+.nom-avec-barre h1 {
+    margin-left: 0.6em; /* Ajustez la valeur pour le décalage souhaité */
+}
+
+.nom-avec-barre h2 {
+    margin-left: 1em; /* Ajustez la valeur pour le décalage souhaité */
+}
+
+.nom-avec-barre h3 {
+    margin-left: 1.2em; /* Ajustez la valeur pour le décalage souhaité */
+}
+
+.info-avec-barre {
+    position: relative;
+    list-style-type: none;
+}
+
+.list-without-dot {
+    list-style-type: none;
+}
+
+.info-avec-barre::before {
+    content: "";
+    position: absolute;
+    left: 0; /* Ajustez la position de la barre en fonction de vos préférences */
+    top: 0;
+    bottom: 0;
+    width: 0.1em; /* Largeur de la barre */
+    background-color: black; /* Couleur de la barre */
+}
+
+.info-avec-barre h4 {
+    margin-left: 0.8em;
+}
+
+.info-avec-barre p {
+    margin-left: 0.8em;
+}
+
+.intro {
+    margin-top: 5em;
+}
+
+.end {
+    margin-bottom: 5em;
+}
+
+.row-divider {
+    border-top: 0.3em solid #ccc; /* Barre grise de 1 pixel avec couleur #ccc */
+    margin-top: 1em;
+}
+
+.page-divider {
+    border-top: 0.3em solid #ccc; /* Barre grise de 1 pixel avec couleur #ccc */
+    margin-top: 5em; /* Marge supérieure pour l'espace entre les rangées */
+    margin-bottom: 5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-divider-end {
+    border-top: 0.1em solid #ccc; /* Barre grise de 1 pixel avec couleur #ccc */
+    margin-top: 5em; /* Marge supérieure pour l'espace entre les rangées */
+    margin-bottom: 1em;
+}
+ .progress {
+    margin-bottom: 2em;
+ }
+
+ .progress-bar {
+    background-color: orange;
+ }
+
+.footer {
+    background-color: white; /* Couleur de fond du footer */
+    color: black; /* Couleur du texte du footer */
+    text-align: center; /* Centrer le texte dans le footer */
+}
+
+.conteneurRight {
+    position: relative;
+}
+
+.conteneurLeft {
+    position: relative;
+}
+
+
+.glisser-droite {
+    animation-name: glissementDroite;
+    animation-duration: 1s;
+}
+
+@keyframes glissementDroite {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.glisser-gauche {
+    animation-name: glissementGauche;
+    animation-duration: 1s;
+}
+
+@keyframes glissementGauche {
+    from {
+        transform: translateX(-100%); /* Commence à 100% de la largeur du conteneur */
+    }
+    to {
+        transform: translateX(0); /* Se termine à 0 (position d'origine) */
+    }
+}
+
+.progress-bar {
+    width: 0; /* La largeur initiale est de 0 */
+    transition: width 1s ease-in-out; /* Animation de la largeur */
+}
+
+.box-shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-block: 3em;
+}
+
