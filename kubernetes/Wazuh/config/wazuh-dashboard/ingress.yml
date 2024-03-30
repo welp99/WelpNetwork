@@ -1,0 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wazuh-dashboard
+  namespace: wazuh
+  annotations: 
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`www.wazuh.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: wazuh-dashboard
+          port: 443
+    - match: Host(`wazuh.your-domain.com`)  # change to your domain
+      kind: Rule
+      services:
+        - name: wazuh-dashboard
+          port: 443
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: tls  # change to your cert name
