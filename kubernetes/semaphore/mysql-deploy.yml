@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: semaphore-mysql-pvc
+  namespace: semaphore
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: semaphore
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_RANDOM_ROOT_PASSWORD
+          value: "yes"
+        - name: MYSQL_DATABASE
+          value: "semaphore"
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: semaphore-secret
+              key: SEMAPHORE_DB_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: semaphore-secret
+              key: SEMAPHORE_DB_PASS
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: semaphore-mysql-pvc
