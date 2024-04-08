@@ -1,0 +1,15 @@
+version: '3.8'
+
+networks:
+  frontend:
+    external: true
+
+services:
+  webwelp: 
+    image: welp93/webwelp:latest
+    container_name: webwelp
+    ports:
+      - 5000:5000
+    restart: always 
+    networks:
+      - frontend
