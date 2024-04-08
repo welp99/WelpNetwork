@@ -1,0 +1,28 @@
+---
+- name: Supprimer les agents Wazuh 'Disconnected' et 'Never connected'
+  hosts: all
+  become: true
+  tasks:
+    - name: Obtenir les ID des agents 'Disconnected' ou 'Never connected'
+      ansible.builtin.shell: >
+        /var/ossec/bin/agent_control -l | grep -E 'Never connected|Disconnected' | awk '{print $2}' | sed 's/,//g'
+      register: agents_output
+      ignore_errors: yes
+
+    - name: Afficher les agents à supprimer
+      ansible.builtin.debug:
+        var: agents_output.stdout_lines
+
+    - name: Supprimer les agents 'Disconnected' ou 'Never connected'
+      ansible.builtin.shell: >
+        /var/ossec/bin/manage_agents -r {{ item }}
+      loop: "{{ agents_output.stdout_lines }}"
+      when: agents_output.stdout != ""
+      ignore_errors: yes
+
+    - name: Restart Wazuh Manager
+      ansible.builtin.systemd:
+        name: wazuh-manager
+        state: restarted
+      when: agents_output.stdout != ""
+      ignore_errors: yes

@@ -1,0 +1,65 @@
+---
+- name: Install Wazuh agent
+  hosts: all
+  become: yes
+  vars_files:
+    - ../vars/vars.yml
+
+  tasks:
+    - name: Check if Wazuh agent is already installed
+      become: yes
+      command: "systemctl status wazuh-agent"
+      register: wazuh_installed
+      ignore_errors: true
+
+    - name: Download Wazuh agent installer
+      get_url:
+        url: "{{wazuh_agent_repo}}{{ wazuh_agent_package }}"
+        dest: "/tmp/{{ wazuh_agent_package }}"
+      when: wazuh_installed is failed
+    
+    - name: Install Wazuh agent with registration
+      become: yes
+      ansible.builtin.shell: |
+        WAZUH_MANAGER={{ wazuh_manager_ip }}
+        WAUZUH_AGENT_GROUP={{ wazuh_agent_group }}
+        WAZUH_AGENT_NAME={{ inventory_hostname }}
+        dpkg -i "/tmp/{{ wazuh_agent_package }}"
+      environment:
+        WAZUH_MANAGER: "{{ wazuh_manager_ip }}"
+        WAUZUH_AGENT_GROUP: "{{ wazuh_agent_group }}"
+        WAZUH_AGENT_NAME: "{{ inventory_hostname }}"
+      args:
+        executable: /bin/bash
+      when: wazuh_installed is failed
+
+    - name: Update Wazuh Manager IP in ossec.conf
+      ansible.builtin.lineinfile:
+        path: /var/ossec/etc/ossec.conf
+        regexp: '<address>.*</address>'
+        line: '<address>{{ wazuh_manager_ip }}</address>'
+        backrefs: yes
+      become: yes
+      when: wazuh_installed is failed
+
+    
+    - name: deamon-reload
+      command: "systemctl daemon-reload"
+      when: wazuh_installed is failed
+
+    - name: Start Wazuh agent
+      service:
+        name: wazuh-agent
+        state: started
+        enabled: true
+      when: wazuh_installed is failed
+    
+    - name: Status of Wazuh agent
+      become: yes
+      command: "systemctl status wazuh-agent"
+      register: wazuh_status
+    
+    - name: Supprimer le paquet téléchargé de l'agent Wazuh
+      ansible.builtin.file:
+        path: /tmp/wazuh-agent_4.7.3-1_amd64.deb
+        state: absent

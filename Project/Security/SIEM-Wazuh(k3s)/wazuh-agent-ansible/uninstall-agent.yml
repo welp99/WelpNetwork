@@ -1,0 +1,22 @@
+---
+- name: Désinstaller Wazuh Agent
+  hosts: all
+  become: yes
+  tasks:
+    - name: Arrêter le service Wazuh Agent
+      ansible.builtin.systemd:
+        name: wazuh-agent
+        state: stopped
+
+    - name: Désinstaller le paquet Wazuh Agent
+      ansible.builtin.apt:
+        name: wazuh-agent
+        state: absent
+
+    - name: deamon-reload
+      command: "systemctl daemon-reload"
+
+    - name: Supprimer le répertoire de l'agent Wazuh
+      ansible.builtin.file:
+        path: /var/ossec
+        state: absent
