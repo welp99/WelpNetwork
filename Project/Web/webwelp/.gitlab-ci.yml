@@ -1,4 +1,9 @@
-docker-build:
+stages:
+  - build
+  - test
+  - deploy
+
+build:
   # Use the official docker image.
   image: docker:cli
   stage: build
@@ -6,6 +11,8 @@ docker-build:
     - docker:dind
   variables:
     DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
@@ -23,5 +30,42 @@ docker-build:
     - if: $CI_COMMIT_BRANCH
       exists:
         - Dockerfile
+
+test:
+  image: docker:cli
+  stage: test
+  services:
+    - docker:dind
+  variables:
+    DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE:latest"
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker run --name flask_test_container -d "$DOCKER_IMAGE_NAME"
+    - docker exec flask_test_container pytest
+  after_script:
+    - docker stop flask_test_container
+    - docker rm flask_test_container
+
+deploy:
+  image: ubuntu:latest
+  stage: deploy
+  only: 
+    - main
+  before_script:
+    - apt-get -yq update
+    - apt-get -yq install docker
+    - apt-get -yq install docker-compose
+    - apt-get -yqq install ssh
+    - install -m 600 -D /dev/null ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+    - ssh-keyscan -H $SSH_HOST > ~/.ssh/known_hosts
+  script:
+    - ssh $SSH_USER@$SSH_HOST "docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY && cd $WORK_DIR && docker compose pull && docker compose up -d && exit"
+  after_script:
+    - rm -rf ~/.ssh
+
 
 
