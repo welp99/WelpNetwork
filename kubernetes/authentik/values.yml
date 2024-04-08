@@ -1,11 +1,11 @@
 authentik:
-    secret_key: "SCJcMGId9mo0Ci9Np/VN1ON9VN1+9JKiGGsccoDLVSWjDXFT"
+    secret_key: "CHANGEME"
     # This sends anonymous usage-data, stack traces on errors and
     # performance data to sentry.io, and is fully opt-in
     error_reporting:
         enabled: true
     postgresql:
-        password: "Wc3Y78J7Wr5ppUoB26cqCU6ohAL9qSnb"
+        password: "CHANGEME"
 
 server:
     ingress:
@@ -13,12 +13,12 @@ server:
         ingressClassName: traefik
         enabled: true
         hosts:
-            - auth.lab.welpnetwork.com
+            - auth.your-domain.com
 
 postgresql:
     enabled: true
     auth:
-        password: "Wc3Y78J7Wr5ppUoB26cqCU6ohAL9qSnb"
+        password: "CHANGEME"
 redis:
     enabled: true
 
@@ -29,9 +29,9 @@ email:
     host: "smtp.gmail.com"
     port: 587
     # -- SMTP credentials, when left empty, no authentication will be done
-    username: "noreply.welpnetwork@gmail.com"
+    username: "example@mail.com"
     # -- SMTP credentials, when left empty, no authentication will be done
-    password: "iqsp drho kqux arlr"
+    password: "CHANGEME"
     # -- Enable either use_tls or use_ssl, they can't be enabled at the same time.
     use_tls: false
     # -- Enable either use_tls or use_ssl, they can't be enabled at the same time.
@@ -39,4 +39,4 @@ email:
     # -- Connection timeout
     timeout: 30
     # -- Email from address, can either be in the format "foo@bar.baz" or "authentik <foo@bar.baz>"
-    from: "noreply.welpnetwork@gmail.com"
+    from: "example@mail.com"
