@@ -6,7 +6,7 @@ networks:
 
 services:
   webwelp: 
-    image: welp93/webwelp:latest
+    image: registry.gitlab.com/welpnetwork/webwelp:latest
     container_name: webwelp
     ports:
       - 5000:5000

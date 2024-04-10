@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-registry
+  namespace: k3s-webwelp
+stringData:
+  .dockerconfigjson: |
+    {
+      "auths": {
+        "registry.gitlab.com": {
+          "username": "token-username",
+          "password": "tokenpassword",
+          "email": "example@mail.com"
+        }
+      }
+    }
+type: kubernetes.io/dockerconfigjson

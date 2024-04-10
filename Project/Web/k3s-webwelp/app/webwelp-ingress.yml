@@ -1,0 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: webwelp-ingress
+  namespace: k3s-webwelp
+  annotations: 
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`www.webwelp2.lab.welpnetwork.com`)
+      kind: Rule
+      services:
+        - name: webwelp-ui
+          port: 80
+    - match: Host(`webwelp2.lab.welpnetwork.com`)
+      kind: Rule
+      services:
+        - name: webwelp-ui
+          port: 80
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: lab-welpnetwork-com-tls 
