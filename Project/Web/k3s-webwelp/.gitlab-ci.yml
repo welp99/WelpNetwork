@@ -1,38 +1,33 @@
-stages:
-  - build
-  - test
-  - deploy
+# CI/CD Pipeline Configuration
 
+# Build Stage: Compiles the code, builds the docker image, and pushes it to the Docker registry.
 build:
-  # Use the official docker image.
-  image: docker:cli
+  image: docker:cli  # Use the Docker CLI image to execute Docker commands.
   stage: build
   tags:
-    - NESS
+    - NESS  # Custom runner tag to select specific runners for the job.
   services:
-    - docker:dind
+    - docker:dind  # Docker-in-Docker service to allow Docker commands execution.
   variables:
-    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
+    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG  # Define the Docker image name.
+    DOCKER_HOST: tcp://docker:2375  # Docker daemon host, needed for Docker-in-Docker.
+    DOCKER_TLS_CERTDIR: ""  # Disable TLS for the Docker daemon connection.
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
-  # Default branch is also tagged with `latest`
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY  # Login to the Docker registry.
   script:
-    - docker build --pull -t "$DOCKER_IMAGE_NAME" .
-    - docker push "$DOCKER_IMAGE_NAME"
+    - docker build --pull -t "$DOCKER_IMAGE_NAME" .  # Build and tag the Docker image.
+    - docker push "$DOCKER_IMAGE_NAME"  # Push the Docker image to the registry.
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
-        docker tag "$DOCKER_IMAGE_NAME" "$CI_REGISTRY_IMAGE:latest"
-        docker push "$CI_REGISTRY_IMAGE:latest"
+        docker tag "$DOCKER_IMAGE_NAME" "$CI_REGISTRY_IMAGE:latest"  # Tag the image as 'latest' if on default branch.
+        docker push "$CI_REGISTRY_IMAGE:latest"  # Push the 'latest' tag to the registry.
       fi
-  # Run this job in a branch where a Dockerfile exists
   rules:
     - if: $CI_COMMIT_BRANCH
       exists:
-        - Dockerfile
+        - Dockerfile  # Only run this job if a Dockerfile exists in the branch.
 
+# Test Stage: Runs automated tests in the Docker container to ensure application quality.
 test:
   image: docker:cli
   stage: test
@@ -41,31 +36,29 @@ test:
   services:
     - docker:dind
   variables:
-    DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE:latest"
+    DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE:latest"  # Use the 'latest' image for tests.
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker run --name flask_test_container -d "$DOCKER_IMAGE_NAME"
-    - docker exec flask_test_container pytest
+    - docker run --name flask_test_container -d "$DOCKER_IMAGE_NAME"  # Start the application container.
+    - docker exec flask_test_container pytest  # Execute tests within the container.
   after_script:
-    - docker stop flask_test_container
-    - docker rm flask_test_container
+    - docker stop flask_test_container  # Stop the test container.
+    - docker rm flask_test_container  # Remove the test container.
 
+# Deploy Stage: Deploys the application to a Kubernetes cluster.
 deploy webwelp:
   stage: deploy
   tags:
-    - K3S
+    - K3S  # Custom runner tag for deployment.
   image: 
-    name: bitnami/kubectl:latest
+    name: bitnami/kubectl:latest  # Use kubectl to apply Kubernetes configurations.
     entrypoint: ['']
   before_script:
-    - echo $KUBECONFIG_BASE64 | base64 -d > ./kubeconfig
+    - echo $KUBECONFIG_BASE64 | base64 -d > ./kubeconfig  # Decode the Kubernetes config.
     - export KUBECONFIG=./kubeconfig
   script:
-    - kubectl apply -k .
-    - kubectl rollout restart deployment/webwelp -n k3s-webwelp
-
-
-
+    - kubectl apply -k .  # Apply Kubernetes manifests from the current directory.
+    - kubectl rollout restart deployment/webwelp -n k3s-webwelp  # Restart the deployment to update pods.
