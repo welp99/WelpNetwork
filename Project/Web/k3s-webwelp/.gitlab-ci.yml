@@ -1,4 +1,8 @@
 # CI/CD Pipeline Configuration
+stages:
+  - build
+  - test
+  - deploy
 
 # Build Stage: Compiles the code, builds the docker image, and pushes it to the Docker registry.
 build:
