@@ -1,0 +1,7 @@
+---
+- name: Update apt packages
+  hosts: all
+  roles: 
+      - role: ping
+      - role: update
+      - role: ntfy

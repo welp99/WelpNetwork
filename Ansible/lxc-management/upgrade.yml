@@ -1,0 +1,7 @@
+---
+- name: Upgrade apt packages
+  hosts: all
+  roles: 
+      - role: ping
+      - role: upgrade
+      - role: ntfy

@@ -1,0 +1,9 @@
+---
+- name: Envoyer une notification
+  uri:
+    url: https://ntfy.welpnetwork.com/zj9NS0zFLPZJHkCy  # Remplacez par l'URL de votre serveur de notification
+    method: POST
+    body: "Server distribution {{ inventory_hostname }} have been updated"  # Décodez le contenu du fichier en base64
+    body_format: raw
+    headers:
+      Content-Type: "text/plain"
