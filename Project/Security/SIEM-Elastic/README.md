@@ -117,7 +117,7 @@ sudo /usr/share/kibana/bin/kibana-setup
 
 Paste the enrollement token 
 
-![kibana-token](../SIEM/src/kibana-token.png)
+![kibana-token](./src/kibana-token.png)
 
 ### Start Kibana
 
@@ -132,7 +132,7 @@ sudo systemctl start kibana
 ss -lntp
 ```
 
-![check-kibana](../SIEM/src/check-kibana.png)
+![check-kibana](./src/check-kibana.png)
 
 ## Nginx
 
@@ -149,9 +149,9 @@ sudo apt install nginx
 sudo nano /etc/nginx/sites-enabled/default
 ```
 
-![proxypass-1](../SIEM/src/proxypass-1.png)
+![proxypass-1](./src/proxypass-1.png)
 
-![proxypass-2](../SIEM/src/proxypass-2.png)
+![proxypass-2](./src/proxypass-2.png)
 
 ```bash
 sudo systemctl enable nginx
@@ -234,27 +234,27 @@ sudo mkdir -p /usr/local/etc/ssl/certs/elastic/
 sudo curl 10.10.22.10:8000/http_ca.crt -o /usr/local/etc/ssl/certs/elastic/http_ca.crt
 ```
 
-![transfert-cert](../SIEM/src/transfert-cert.png)
+![transfert-cert](./src/transfert-cert.png)
 
 - Go to kibana
 - Clic on Add Integration
 
-![add-integration](../SIEM/src/add-integration.png)
+![add-integration](./src/add-integration.png)
 
 - Search for “Fleet server”
 
-![fleet-server](../SIEM/src/fleet-server.png)
+![fleet-server](./src/fleet-server.png)
 
 - Add fleet server
 
-![add-fleetserver](../SIEM/src/add-fleetserver.png)
+![add-fleetserver](./src/add-fleetserver.png)
 
-![fleet-server-integration](../SIEM/src/fleet-server-integration.png)
+![fleet-server-integration](./src/fleet-server-integration.png)
 
 - Leave as default & click on “Save and continue”
 - Click on “Add Elastic Agent to yours hosts”
 
-![create-agent](../SIEM/src/create-agent.png)
+![create-agent](./src/create-agent.png)
 
 - Add Fleet Server
 
@@ -266,11 +266,11 @@ We will used a different server, only the fleet server will be connected to elas
 - Add your fleet server host
 - Add name and URL for you fleet server
 
-![add-fleet-host](../SIEM/src/add-fleet-host.png)
+![add-fleet-host](./src/add-fleet-host.png)
 
 - Generate a service token
 
-![generate-serviceToken](../SIEM/src/genererate-serviceToken.png)
+![generate-serviceToken](./src/genererate-serviceToken.png)
 
 ```bash
 AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE3MTA5MzU1NzMxOTA6RlBiLXc4UTVRRUtjUjlnZnd0VGZXQQ
@@ -289,13 +289,13 @@ sudo ./elastic-agent install \
   --insecure
 ```
 
-![fleet-setting](../SIEM/src/fleet-setting.png)
+![fleet-setting](.src/fleet-setting.png)
 
 - go to “Fleet Settings”
 
 You should have your fleet server with the right URL display here
 
-![fleet-url](../SIEM/src/fleet-url.png)
+![fleet-url](./src/fleet-url.png)
 
 ### Creation of encrypted-key for Kibana
 
