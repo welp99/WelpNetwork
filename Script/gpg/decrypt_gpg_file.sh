@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Dossier contenant les fichiers .gpg
-directory="/home/welp"
+directory="/path/to/files_encrypted"
 
 # Dossier de sortie pour les fichiers déchiffrés
-output_directory="/home/welp"
+output_directory="/path/to/files_decrypted"
 
 # Créer le dossier de sortie s'il n'existe pas
 mkdir -p "$output_directory"
@@ -15,7 +15,7 @@ for file in "$directory"/*.gpg; do
     base_name=$(basename "$file" .gpg)
 
     # Déchiffrer le fichier
-    gpg --decrypt --output "$output_directory/$base_name" "$file"
+    gpg --yes --decrypt --output "$output_directory/$base_name" "$file"
 
     # Vérifier si le déchiffrement a réussi
     if [ $? -eq 0 ]; then
