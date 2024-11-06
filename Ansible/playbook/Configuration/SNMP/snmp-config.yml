@@ -1,0 +1,32 @@
+---
+- name: Playbook pour installer et configurer SNMP
+  hosts: all
+  become: true
+  vars:
+    snmp_community: "votre communauté"  # Remplacez par le nom de votre communauté SNMP
+
+  tasks:
+    - name: Installer SNMP
+      ansible.builtin.package:
+        name: snmpd
+        state: present
+
+    - name: Configurer le fichier SNMP pour définir la communauté
+      ansible.builtin.lineinfile:
+        path: /etc/snmp/snmpd.conf
+        regexp: '^com2sec notConfigUser'
+        line: "com2sec notConfigUser  default  {{ snmp_community }}"
+        state: present
+        backup: yes
+
+    - name: Activer et démarrer le service SNMP
+      ansible.builtin.service:
+        name: snmpd
+        enabled: true
+        state: started
+
+    - name: Vérifier le statut du service SNMP
+      ansible.builtin.systemd:
+        name: snmpd
+        enabled: true
+        state: started
