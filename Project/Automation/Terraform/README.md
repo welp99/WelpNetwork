@@ -1,8 +1,24 @@
 #Terraform 
 
-<Terraform is an open-source infrastructure as code software tool created by HashiCorp. It enables users to define and provision a datacenter infrastructure using a high-level configuration language known as Hashicorp Configuration Language, or optionally JSON.>
+Terraform is an open-source infrastructure as code software tool created by HashiCorp. It enables users to define and provision a datacenter infrastructure using a high-level configuration language known as Hashicorp Configuration Language, or optionally JSON.
 
-## Installation
+Here is a simple guide on how to install Terraform on your system and how to use it to provision a datacenter infrastructure.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Commands](#commands)
+- [welp](#welp)
+
+## Prerequisites
+
+- Docker
+- Docker Compose
+- Proxmox VE
+- Proxmox VE API Token
+
+## Getting Started
 
 1. Create a directory for Terraform and a docker compose file
 ```bash
