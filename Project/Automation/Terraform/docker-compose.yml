@@ -1,0 +1,11 @@
+services:
+  terraform:
+    image: hashicorp/terraform:1.10
+    container_name: terraform
+    volumes:
+      - .:/terraform
+    working_dir: /terraform
+    environment:
+      - TZ=Europe/Paris
+    restart: always
+    network_mode: host
